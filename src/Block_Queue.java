@@ -4,14 +4,35 @@
  */
 import java.util.ArrayList;
 
+/**
+ * Class that represents the Blocked_Q.
+ * Contains various methods used to organize
+ * the Blocked_Q and keep it sorted by IO
+ * completion time.
+ */
 public class Block_Queue {
 
-    ArrayList<PCB> list = new ArrayList<PCB>();
-    private SYSTEM system;
+    /*
+            Used an ArrayList due to the fast retrieval of Objects
+            as well as when an Object is added at a specific index
+            manual shifting does not need to be done as with an array.
+
+            An array could be used to make it more memory efficient
+            however many of the operations already built into an ArrayList
+            would have to be implemented.
+     */
+    ArrayList<PCB> list = new ArrayList<PCB>();     // ArrayList of PCB
+    private SYSTEM system;                          // Global variable of the instance of System
 
     /**
      * Adds the specified Job to the end of the list.
-     * @param pcb Job to be appeneded to this list
+     * Sorted by the I/O completion time.
+     *
+     * Insertion is O(n) but retrieval is constant.
+     * Keeping a sorted list allowed for the easy checking
+     * of I/O completion.
+     *
+     * @param pcb PCB to be appended to this list
      */
     public void push (PCB pcb) {
         for (int i = 0; i < list.size(); i++) {
@@ -35,27 +56,13 @@ public class Block_Queue {
         }
     }
 
+    /**
+     * Returns the PCB at the head of the list
+     * without removal
+     * @return PCB at the head of the list
+     */
     public PCB peek() {
         return list.get(0);
-    }
-
-    /**
-     * Finds and returns the PCBs that have finished I/O
-     * If no job can be found, null is returned.
-     * @param currentTime The current time to check against
-     * @return Returns a job that fits the memory constraint.
-     */
-
-    public PCB findJob(double currentTime) {
-
-        // Checks to see if there is elements
-        // Then checks to see if any jobs are completed
-        // PCB I/O completion <= clock Time then it is finished
-        if (list.size() > 0 && list.get(0).getIOCompletion() <= currentTime) {
-            return list.remove(0);
-        } else {
-            return null;
-        }
     }
 
     /**
@@ -66,6 +73,12 @@ public class Block_Queue {
         return list.size();
     }
 
+    /**
+     * Returns a string version of the Queue
+     * Used for Debugging and print statements
+     *
+     * @return String version of the Queue
+     */
     public String toString() {
         String string = "";
 

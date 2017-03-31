@@ -1,29 +1,40 @@
 import java.util.ArrayList;
 
 /**
- * Brandon Wong
- * OS_Project
+ * Class that represents the JOB_Q.
  *
- * Created another class to make pushing and popping
- * off the queue easier, as well as finding a job that
- * fits the memory requirements.
+ * Contains various methods that keep
+ * the queue sorted by memory so that
+ * time isn't spent searching for the perfect job.
  */
-public class JobQueue {
 
+public class JobQueue {
+    /*
+        Used an ArrayList due to the fast retrieval of Objects
+        as well as when an Object is added at a specific index
+        manual shifting does not need to be done as with an array.
+
+         An array could be used to make it more memory efficient
+         however many of the operations already built into an ArrayList
+         would have to be implemented.
+     */
     ArrayList<Job> list = new ArrayList<Job>();
 
 
     /**
      * Adds the specified Job to the sorted list.
      * List is sorted from least amount of memory to greater
-     * @param job Job to be appeneded to this list
+     * @param job Job to be appended to this list
      */
     public void push (Job job) {
+
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getMemorySize() >= job.getMemorySize()) {
+            if (list.get(i).getMemorySize() > job.getMemorySize()) {
                 list.add(i, job);
+                return;
             }
         }
+        list.add(job);
     }
 
     /**
@@ -38,6 +49,10 @@ public class JobQueue {
         }
     }
 
+    /**
+     * Returns the head of the list, without removal.
+     * @return Job at the head of the list
+     */
     public Job peek() {
         return list.get(0);
     }

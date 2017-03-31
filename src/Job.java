@@ -1,23 +1,22 @@
 import java.util.ArrayList;
 
 /**
- * Brandon Wong
- * OS_Project
+ * Class representing a Job.
+ *
+ * Used to compile all the data from the
+ * input file to store in the Job_Q or to
+ * create a PCB from.
  */
 public class Job {
 
-    private int ID;
-    private int memorySize;
-    private ArrayList<Integer> burstSize;
-    private int currentBurst;
+    private int ID;                         // ID of the job
+    private int memorySize;                 // Memory size of the job
+    private ArrayList<Integer> burstSize;   // List of the Burst sizes
 
-    private SYSTEM system;
-
-    public Job(int ID, int memorySize, ArrayList<Integer> burstSizes, SYSTEM system) {
+    public Job(int ID, int memorySize, ArrayList<Integer> burstSizes) {
         this.ID = ID;
         this.memorySize = memorySize;
         this.burstSize = burstSizes;
-        this.currentBurst = 0;
     }
 
 
@@ -49,17 +48,13 @@ public class Job {
         return burstSize;
     }
 
-    public int getBurstSize() {
-        return burstSize.get(currentBurst++);
-    }
-
+    /**
+     * ToString method to return a string version of the Job
+     * @return string version of the job
+     */
     public String toString() {
 
         return "ID: " + ID + ", Memory Size: " + memorySize +
                 ", Burst Sizes: " + burstSize.toString();
     }
-    public PCB toPCB() {
-        return new PCB(ID, memorySize, burstSize, system);
-    }
-
 }
